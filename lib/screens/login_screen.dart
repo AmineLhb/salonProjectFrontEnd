@@ -16,6 +16,7 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   TextEditingController _emailController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
+  bool _obscureText = true;
   final _formKey = GlobalKey<FormState>();
   get altButton => null;
   @override
@@ -72,7 +73,6 @@ class _LoginScreenState extends State<LoginScreen> {
                   SizedBox(
                     height: 30,
                   ),
-
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 25),
                     child: Column(children: [
@@ -118,7 +118,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                         child: TextFormField(
                           controller: _passwordController,
-                          obscureText: true,
+                          obscureText: _obscureText,
                           decoration: InputDecoration(
                             errorStyle: TextStyle(
                               fontSize: 15,
@@ -138,6 +138,17 @@ class _LoginScreenState extends State<LoginScreen> {
                                 size: 20,
                               ),
                             ),
+                            suffixIcon: Material(
+                                color: Colors.transparent,
+                                child: InkWell(
+                                    child: Icon(
+                                      Icons.remove_red_eye,
+                                    ),
+                                    onTap: () {
+                                      setState(() {
+                                        _obscureText = !_obscureText;
+                                      });
+                                    })),
                             hintStyle: kBodyText,
                           ),
                           style: kBodyText,

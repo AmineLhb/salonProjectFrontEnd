@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter_application_1/screens/home_screen.dart';
 import 'package:flutter_application_1/screens/login_screen.dart';
 import 'package:flutter_application_1/services/auth.dart';
@@ -19,6 +21,7 @@ class _SignUpState extends State<SignUp> {
   TextEditingController _passwordController = TextEditingController();
   TextEditingController _password2Controller = TextEditingController();
   List<String> _errors = [' '];
+  bool _obscureText = true;
   @override
   void initState() {
     _emailController.text = '';
@@ -201,7 +204,7 @@ class _SignUpState extends State<SignUp> {
                                   }
                                   return null;
                                 },
-                                obscureText: true,
+                                obscureText: _obscureText,
                                 decoration: InputDecoration(
                                   contentPadding:
                                       const EdgeInsets.symmetric(vertical: 10),
@@ -216,6 +219,17 @@ class _SignUpState extends State<SignUp> {
                                       size: 20,
                                     ),
                                   ),
+                                  suffixIcon: Material(
+                                      color: Colors.transparent,
+                                      child: InkWell(
+                                          child: Icon(
+                                            Icons.remove_red_eye,
+                                          ),
+                                          onTap: () {
+                                            setState(() {
+                                              _obscureText = !_obscureText;
+                                            });
+                                          })),
                                   hintStyle: kBodyText,
                                 ),
                                 style: kBodyText,
@@ -242,7 +256,7 @@ class _SignUpState extends State<SignUp> {
                                     return '';
                                   }
                                 },
-                                obscureText: true,
+                                obscureText: _obscureText,
                                 decoration: InputDecoration(
                                   contentPadding:
                                       const EdgeInsets.symmetric(vertical: 10),
@@ -257,6 +271,17 @@ class _SignUpState extends State<SignUp> {
                                       size: 20,
                                     ),
                                   ),
+                                  suffixIcon: Material(
+                                    color: Colors.transparent,
+                                      child: InkWell(
+                                          child: Icon(
+                                            Icons.remove_red_eye,
+                                          ),
+                                          onTap: () {
+                                            setState(() {
+                                              _obscureText = !_obscureText;
+                                            });
+                                          })),
                                   hintStyle: kBodyText,
                                 ),
                                 style: kBodyText,
