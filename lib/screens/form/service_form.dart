@@ -1,19 +1,21 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/screens/views/DropDownButton.dart';
-import 'package:flutter_application_1/screens/views/TimePicker.dart';
+import 'package:flutter_application_1/screens/form/barber_form.dart';
 import 'package:flutter_application_1/screens/views/palatte.dart';
 import 'package:flutter_application_1/screens/views/widgets.dart';
-import 'package:intl/intl.dart';
+import 'package:flutter_application_1/services/service.dart';
 
-import 'barber.dart';
+import 'package:provider/provider.dart';
 
-class ServicesPage extends StatefulWidget {
-  const ServicesPage({Key key}) : super(key: key);
+
+
+class ServicesForm extends StatefulWidget {
+  const ServicesForm({Key key}) : super(key: key);
   @override
-  State<StatefulWidget> createState() => _ServicesPage();
+  State<StatefulWidget> createState() => _ServicesForm();
 }
 
-class _ServicesPage extends State<ServicesPage> {
+class _ServicesForm extends State<ServicesForm> {
   TextEditingController _titlecontroller = TextEditingController();
   TextEditingController _priceController = TextEditingController();
   TextEditingController _descriptionController = TextEditingController();
@@ -133,8 +135,8 @@ class _ServicesPage extends State<ServicesPage> {
                                 //validation
                                 validator: (String value) {
                                   // String pattern = r'(^[a-zA-Z ]*$)';
-                                  String pattern = r'(^[0-9]{1}$)';
-                                  RegExp regExp = new RegExp(pattern);
+                                  // String pattern = r'(^[0-9]{1}$)';
+                                  // RegExp regExp = new RegExp(pattern);
                                   if (value.isEmpty) {
                                     _errors.add("Price is required");
                                     return ' ';
@@ -259,14 +261,15 @@ class _ServicesPage extends State<ServicesPage> {
                                             _descriptionController.text,
                                       };
                                       if (_formKey.currentState.validate()) {
-                                        //Provider.of<Salon>(context, listen: false)
-                                        //    .store(creds: creds);
+                                        Provider.of<Service>(context,
+                                                listen: false)
+                                            .store(creds: creds);
                                         print(creds);
                                         Navigator.push(
                                             context,
                                             MaterialPageRoute(
                                                 builder: (context) =>
-                                                    ServicesPage()));
+                                                    ServicesForm()));
                                       } else {
                                         print(_errors);
                                         print(_errors.join("\n"));
@@ -335,14 +338,15 @@ class _ServicesPage extends State<ServicesPage> {
                                             _descriptionController.text,
                                       };
                                       if (_formKey.currentState.validate()) {
-                                        //Provider.of<Salon>(context, listen: false)
-                                        //    .store(creds: creds);
+                                        Provider.of<Service>(context,
+                                                listen: false)
+                                            .store(creds: creds);
                                         print(creds);
                                         Navigator.push(
                                             context,
                                             MaterialPageRoute(
                                                 builder: (context) =>
-                                                    BarberPage()));
+                                                    BarberForm()));
                                       } else {
                                         print(_errors);
                                         print(_errors.join("\n"));
@@ -389,7 +393,7 @@ class _ServicesPage extends State<ServicesPage> {
                                       padding: const EdgeInsets.symmetric(
                                           vertical: 10.0),
                                       child: Text(
-                                        "Barber Informations",
+                                        "barber informations",
                                         style: TextStyle(
                                           fontSize: 17,
                                         ),

@@ -1,38 +1,36 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/screens/views/DropDownButton.dart';
-import 'package:flutter_application_1/screens/views/TimePicker.dart';
-import 'package:flutter_application_1/screens/views/palatte.dart';
-import 'package:flutter_application_1/screens/views/widgets.dart';
-import 'package:intl/intl.dart';
-import 'package:table_calendar/table_calendar.dart';
 
-import 'package:flutter/material.dart';
+// import 'package:flutter_laravel/services/auth.dart';
+
 import 'package:provider/provider.dart';
 
-import '../services/salon.dart';
+import '../../services/salon.dart';
+import '../home_screen.dart';
+import '../views/palatte.dart';
+import '../views/widgets.dart';
 
-class SalonUpgrade extends StatefulWidget {
-  const SalonUpgrade({Key key}) : super(key: key);
+
+class SalonForm extends StatefulWidget {
+  const SalonForm({Key key}) : super(key: key);
   @override
-  State<StatefulWidget> createState() => _SalonUpgrade();
+  State<StatefulWidget> createState() => _SalonForm();
 }
 
-class _SalonUpgrade extends State<SalonUpgrade> {
+class _SalonForm extends State<SalonForm> {
   TextEditingController _salonnamecontroller = TextEditingController();
   TextEditingController _numberController = TextEditingController();
   TextEditingController _phoneController = TextEditingController();
-  List<String> _errors = [' '];
+  List<String> _errors=[' '];
 
-  @override
+    @override
   void initState() {
-    _salonnamecontroller.text = '';
-    _numberController.text = '';
-    _phoneController.text = '';
+    _salonnamecontroller.text = 'bogsni';
+    _numberController.text = '3';
+    _phoneController.text = '0611771354';
 
     super.initState();
   }
-
-  final _formKey = GlobalKey<FormState>();
+    final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +46,7 @@ class _SalonUpgrade extends State<SalonUpgrade> {
           backgroundColor: Colors.transparent,
           body: SingleChildScrollView(
             child: Form(
-              key: _formKey,
+              key:_formKey,
               child: Column(
                 children: [
                   SizedBox(
@@ -132,23 +130,22 @@ class _SalonUpgrade extends State<SalonUpgrade> {
                                 borderRadius: BorderRadius.circular(16),
                               ),
                               child: TextFormField(
-                                controller: _numberController,
-                                //validation
-                                validator: (String value) {
-                                  // String pattern = r'(^[a-zA-Z ]*$)';
-                                  String pattern = r'(^[0-9]{1}$)';
-                                  RegExp regExp = new RegExp(pattern);
-                                  if (value.isEmpty) {
-                                    _errors.add("number of barber is required");
-                                    return ' ';
-                                  } else if (!regExp.hasMatch(value)) {
-                                    _errors.add(
-                                        "number of barber can't more than 9");
-                                    return ' ';
-                                  }
-                                  return null;
-                                },
-
+                            controller: _numberController,
+                            //validation
+                            validator: (String value) {
+                              // String pattern = r'(^[a-zA-Z ]*$)';
+                              String pattern = r'(^[0-9]{1}$)';
+                              RegExp regExp = new RegExp(pattern);
+                              if (value.isEmpty) {
+                                _errors.add("number of barber is required");
+                                return ' ';
+                              } else if (!regExp.hasMatch(value)) {
+                                _errors.add("number of barber can't more than 9");
+                                return ' ';
+                              }
+                              return null;
+                            },
+                            
                                 decoration: const InputDecoration(
                                   filled: true,
                                   fillColor: Colors.transparent,
@@ -186,21 +183,21 @@ class _SalonUpgrade extends State<SalonUpgrade> {
                                 borderRadius: BorderRadius.circular(16),
                               ),
                               child: TextFormField(
-                                controller: _phoneController,
-                                //validation
-                                validator: (String value) {
-                                  // String pattern = r'(^[a-zA-Z ]*$)';
-                                  String pattern = r'(^[0-9]{10}$)';
-                                  RegExp regExp = new RegExp(pattern);
-                                  if (value.isEmpty) {
-                                    _errors.add("phone number is requied");
-                                    return ' ';
-                                  } else if (!regExp.hasMatch(value)) {
-                                    _errors.add("Enter a correct phone number");
-                                    return ' ';
-                                  }
-                                  return null;
-                                },
+                              controller: _phoneController,
+                            //validation
+                            validator: (String value) {
+                              // String pattern = r'(^[a-zA-Z ]*$)';
+                              String pattern = r'(^[0-9]{10}$)';
+                              RegExp regExp = new RegExp(pattern);
+                              if (value.isEmpty) {
+                                _errors.add("phone number is requied");
+                                return ' ';
+                              } else if (!regExp.hasMatch(value)) {
+                                _errors.add("Enter a correct phone number");
+                                return ' ';
+                              }
+                              return null;
+                            },
                                 decoration: InputDecoration(
                                   contentPadding:
                                       const EdgeInsets.symmetric(vertical: 10),
@@ -234,6 +231,7 @@ class _SalonUpgrade extends State<SalonUpgrade> {
                             const SizedBox(
                               height: 10.0,
                             ),
+                            
                             Container(
                               decoration: BoxDecoration(
                                 color: Colors.white.withOpacity(0.3),
@@ -250,59 +248,57 @@ class _SalonUpgrade extends State<SalonUpgrade> {
                                 borderRadius: BorderRadius.circular(16),
                               ),
                               child: ElevatedButton(
-                                onPressed: () {
+                                onPressed: ()  {
+
                                   Map creds = {
                                     'salon_name': _salonnamecontroller.text,
                                     'nb_barber': _numberController.text,
                                     'phone': _phoneController.text,
                                   };
-                                  if (_formKey.currentState.validate()) {
+                                  if(_formKey.currentState.validate()){
                                     Provider.of<Salon>(context, listen: false)
                                         .store(creds: creds);
-                                    print(creds);
-                                  } else {
-                                    print(_errors);
+                                    Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => HomeScreen()));
+                                        print(creds);
+                                  }else{
+                                    print(_errors);  
                                     print(_errors.join("\n"));
-                                    String err = _errors.join("\n");
-                                    showDialog(
-                                        context: context,
-                                        builder: (BuildContext context) {
-                                          return AlertDialog(
-                                              backgroundColor:
-                                                  Colors.white.withOpacity(0.7),
-                                              title: Text(
-                                                'Error',
-                                                style: TextStyle(
-                                                    color: Colors.red),
-                                                textAlign: TextAlign.center,
-                                              ),
-                                              content: Text(
-                                                err,
-                                                style: TextStyle(
-                                                  color: Colors.red,
-                                                ),
-                                              ),
-                                              actions: <Widget>[
-                                                RaisedButton(
-                                                    color: Colors.white
-                                                        .withOpacity(0.4),
-                                                    child: Text(
-                                                      'OK',
-                                                    ),
-                                                    onPressed: () {
-                                                      Navigator.of(context)
-                                                          .pop();
-                                                    })
-                                              ]);
-                                        });
-                                  }
+                                      String err=_errors.join("\n");
+                                          showDialog(
+                                            context: context,
+                                            builder: (BuildContext context) {
+                                              return AlertDialog(
+                                                  backgroundColor: Colors.white.withOpacity(0.7),
+                                                  title: Text('Error', style:TextStyle(color: Colors.red), textAlign: TextAlign.center,),
+                                                  content: Text(
+                                                      err, style:TextStyle(
+                                                        color: Colors.red,
+                                                        
+                                                        ),),
+                                                  actions: <Widget>[
+                                                    RaisedButton(
+                                                        color: Colors.white.withOpacity(0.4),
+                                                        child: Text('OK',),
+                                                        onPressed: () {
+                                                          Navigator.of(context).pop();
+                                                        })
+                                                  ]
+                                                 
+                                              );
+                                            });
+                                            }
+                                  
+                                      setState(() {
+                                      print(_errors);
+                                      _errors.clear();
+                                    });
 
-                                  setState(() {
-                                    print(_errors);
-                                    _errors.clear();
-                                  });
-                                },
-                                child: Padding(
+                                    
+                                  },
+                                  child: Padding(
                                   padding: const EdgeInsets.symmetric(
                                       vertical: 16.0),
                                   child: Text(

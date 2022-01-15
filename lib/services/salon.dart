@@ -8,8 +8,14 @@ import 'dio.dart';
 
 class Salon extends ChangeNotifier {
   String _token;
+  static bool _like = false;
+  static bool get like => _like;
+
+  static List<dynamic> _salons;
+  static List<dynamic> get salons => _salons;
   final storage = new FlutterSecureStorage();
-  //store service
+
+  //store salon
   void store({Map creds}) async {
     print(creds);
 
@@ -26,5 +32,24 @@ class Salon extends ChangeNotifier {
     } catch (e) {
       print(e.toString());
     }
+  }
+
+  void index() async {
+    Dio.Response response = await dio().get('/salon');
+    _salons = response.data;
+  }
+
+  void addLike(int id) async {
+    Dio.Response response = await dio().put('/salon/addlike/$id');
+    _like = true;
+    // _salons=response.data;
+    print(response);
+  }
+
+  void deleteLike(int id) async {
+    Dio.Response response = await dio().put('/salon/deletelike/$id');
+    // _salons=response.data;
+    _like = false;
+    print(response);
   }
 }

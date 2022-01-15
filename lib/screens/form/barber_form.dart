@@ -1,17 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/screens/views/DropDownButton.dart';
-import 'package:flutter_application_1/screens/views/TimePicker.dart';
-import 'package:flutter_application_1/screens/views/palatte.dart';
-import 'package:flutter_application_1/screens/views/widgets.dart';
-import 'package:intl/intl.dart';
 
-class BarberPage extends StatefulWidget {
-  const BarberPage({Key key}) : super(key: key);
+import 'package:provider/provider.dart';
+
+import '../../services/barber.dart';
+import '../views/palatte.dart';
+import '../views/widgets.dart';
+import 'gallery_form.dart';
+
+
+class BarberForm extends StatefulWidget {
+  const BarberForm({Key key}) : super(key: key);
   @override
-  State<StatefulWidget> createState() => _BarberPage();
+  State<StatefulWidget> createState() => _BarberForm();
 }
 
-class _BarberPage extends State<BarberPage> {
+class _BarberForm extends State<BarberForm> {
   TextEditingController _namecontroller = TextEditingController();
   TextEditingController _yearsController = TextEditingController();
   List<String> _errors = [' '];
@@ -199,18 +202,18 @@ class _BarberPage extends State<BarberPage> {
                                     ),
                                     onPressed: () {
                                       Map creds = {
-                                        'title': _namecontroller.text,
-                                        'price': _yearsController.text,
-                                      };
+                                        'name': _namecontroller.text,
+                                        'years_exp': _yearsController.text,
+                                        };
                                       if (_formKey.currentState.validate()) {
-                                        //Provider.of<Salon>(context, listen: false)
-                                        //    .store(creds: creds);
+                                        Provider.of<Barber>(context, listen: false)
+                                           .store(creds: creds);
                                         print(creds);
                                         Navigator.push(
                                             context,
                                             MaterialPageRoute(
                                                 builder: (context) =>
-                                                    BarberPage()));
+                                                    BarberForm()));
                                       } else {
                                         print(_errors);
                                         print(_errors.join("\n"));
@@ -273,12 +276,18 @@ class _BarberPage extends State<BarberPage> {
                                     ),
                                     onPressed: () {
                                       Map creds = {
-                                        'title': _namecontroller.text,
-                                        'price': _yearsController.text,
+                                        'name': _namecontroller.text,
+                                        'years_exp': _yearsController.text,
                                       };
                                       if (_formKey.currentState.validate()) {
-                                        //Provider.of<Salon>(context, listen: false)
-                                        //    .store(creds: creds);
+                                        Provider.of<Barber>(context, listen: false)
+                                           .store(creds: creds);
+                                           Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    GalleryForm()));
+                                        
                                         print(creds);
                                       } else {
                                         print(_errors);
