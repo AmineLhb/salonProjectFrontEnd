@@ -1,8 +1,16 @@
 // import 'dart:html';
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/screens/home_screen.dart';
 import 'package:flutter_application_1/screens/views/widgets.dart';
 import 'package:flutter_application_1/services/gallery.dart';
+import 'package:flutter_application_1/services/auth.dart';
+import 'package:flutter_application_1/services/dio.dart';
+import 'package:flutter_application_1/services/barber.dart';
+import 'package:flutter_application_1/services/service.dart';
+import 'package:flutter_application_1/services/salon.dart';
+import 'package:flutter_application_1/services/reserver.dart';
+
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
@@ -16,27 +24,23 @@ class GalleryForm extends StatefulWidget {
 class _GalleryFormState extends State<GalleryForm> {
   File uploadimage; //variable for choosed file
 
-  Future<void> chooseImage() async {
-    final choosedimage =
-        await ImagePicker.pickImage(source: ImageSource.gallery);
+  // Future<void> chooseImage() async {
+  //       final choosedimage = await ImagePicker.pickImage(source: ImageSource.gallery);
 
-    //set source: ImageSource.camera to get image from camera
+  //       //set source: ImageSource.camera to get image from camera
 
-    setState(() {
-      uploadimage = File(choosedimage.path);
-    });
-  }
+  //       setState(() {
+  //           uploadimage = File(choosedimage.path);
+  //       });
+  // }
+  // Future<void> takePicture() async {
+  //       final choosedimage = await ImagePicker.pickImage(source: ImageSource.camera);
+  //       //set source: ImageSource.camera to get image from camera
 
-  Future<void> takePicture() async {
-    final choosedimage =
-        await ImagePicker.pickImage(source: ImageSource.camera);
-    // set source: ImageSource.camera to get image from camera
-
-    setState(() {
-      uploadimage = File(choosedimage.path);
-    });
-  }
-
+  //       setState(() {
+  //           uploadimage = File(choosedimage.path);
+  //       });
+  // }
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -88,27 +92,21 @@ class _GalleryFormState extends State<GalleryForm> {
                                 // print(uploadimage);
                                 Provider.of<Gallery>(context, listen: false)
                                     .store(uploadimage.path);
-                                // print(uploadimage);
-                                // Navigator.push(
-                                //     context,
-                                //     MaterialPageRoute(
-                                //         builder: (context) =>
-                                //             ()));
-                                // uploadImage();
-                                //start uploading image
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => HomeScreen()));
                               },
                               icon: Icon(Icons.file_upload),
                               label: Text("UPLOAD IMAGE"),
                               color: Colors.blueGrey[300],
                               colorBrightness: Brightness.dark,
-                              //set brghtness to dark, because deepOrangeAccent is darker coler
-                              //so that its text color is light
                             ))),
                   Container(
                     width: 163,
                     child: RaisedButton.icon(
                       onPressed: () {
-                        chooseImage(); // call choose image function
+                        // chooseImage(); // call choose image function
                       },
                       icon: Icon(Icons.folder_open),
                       label: Text("CHOOSE IMAGE"),
@@ -120,7 +118,7 @@ class _GalleryFormState extends State<GalleryForm> {
                     width: 163,
                     child: RaisedButton.icon(
                       onPressed: () {
-                        takePicture(); // call choose image function
+                        // takePicture(); // call choose image function
                       },
                       icon: Icon(Icons.camera_alt),
                       label: Text("TAKE PICTURE"),

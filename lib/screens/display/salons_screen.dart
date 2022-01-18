@@ -7,7 +7,7 @@ import 'package:flutter_application_1/services/service.dart';
 import 'package:provider/provider.dart';
 
 // import '../view.dart';
-var salons = Salon.salons;
+var salons=Salon.salons;
 // const stylistData = [
 //   {
 //     'stylistName': 'Cameron Jones',
@@ -53,7 +53,7 @@ class SalonsScreen extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
                         BackButton(
-                          color: Colors.white,
+                            color: Colors.white,
                         ),
                       ],
                     ),
@@ -74,26 +74,27 @@ class SalonsScreen extends StatelessWidget {
                       padding: EdgeInsets.symmetric(horizontal: 30),
                       child: Column(
                         children: [
-                          SizedBox(
-                            height: 50,
-                          ),
-                          Text(
-                            'Salons',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 24,
-                            ),
-                          ),
+                              SizedBox(
+                                height: 50,
+                              ),
+                              Text(
+                                'Salons',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 24,
+                                ),
+                              ),
                           Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: List.generate(
-                                  salons.length, (i) => SalonsCard(salons[i]))
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: 
+
+                              List.generate(salons.length,(i)=> SalonsCard(salons[i]))
 
                               // StylistCard(salons[0]),
                               // StylistCard(salons[1]),
                               // StylistCard(salons[2]),
-
-                              ),
+                            
+                          ),
                         ],
                       ),
                     ),
@@ -117,7 +118,7 @@ class SalonsCard extends StatelessWidget {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 10),
       width: MediaQuery.of(context).size.width,
-      height: 200,
+      height: 200 ,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
         color: Color(0xffFFF0EB),
@@ -144,6 +145,7 @@ class SalonsCard extends StatelessWidget {
                     fontSize: 20,
                   ),
                 ),
+
                 SizedBox(
                   height: 10,
                 ),
@@ -152,15 +154,17 @@ class SalonsCard extends StatelessWidget {
                   style: TextStyle(
                     fontWeight: FontWeight.w300,
                   ),
+                  
                 ),
                 SizedBox(
                   height: 10,
                 ),
                 Text(
-                  stylist['likes'].toString() + " \u2764️",
+                  stylist['likes'].toString()+" \u2764️",
                   style: TextStyle(
                     fontWeight: FontWeight.w300,
                   ),
+                  
                 ),
                 SizedBox(
                   height: 20,
@@ -168,13 +172,12 @@ class SalonsCard extends StatelessWidget {
                 MaterialButton(
                   onPressed: () async {
                     print(Salon.salons);
-                    await Provider.of<Service>(context, listen: false)
-                        .show(stylist["user_id"]);
-
+                    await Provider.of<Service>(context,listen: false).show(stylist["user_id"]);
+                    var services=await Provider.of<Service>(context,listen: false).services;
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => ServiceScreen(stylist)));
+                            builder: (context) => ServiceScreen(stylist,services)));
                   },
                   color: Color(0xff4E295B),
                   shape: RoundedRectangleBorder(

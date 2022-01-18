@@ -1,19 +1,23 @@
 import 'package:dio/dio.dart' as Dio;
+
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_application_1/services/auth.dart';
+import 'package:flutter_application_1/services/dio.dart';
+
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:provider/provider.dart';
 
-import 'auth.dart';
-import 'dio.dart';
-
 class Salon extends ChangeNotifier {
   String _token;
-  static bool _like = false;
-  static bool get like => _like;
-
+  static Map<int, bool> _like = {0: false};
+  static Map<int, bool> get like => _like;
+  static int _likes;
+  static int get likes => _likes;
   static List<dynamic> _salons;
   static List<dynamic> get salons => _salons;
   final storage = new FlutterSecureStorage();
+  static var _salon;
+  static get salon => _salon;
 
   //store salon
   void store({Map creds}) async {
@@ -37,11 +41,33 @@ class Salon extends ChangeNotifier {
   void index() async {
     Dio.Response response = await dio().get('/salon');
     _salons = response.data;
+    // _like[1]=true;
+    for (dynamic _salon in _salons) {
+      int id = _salon["id"];
+      print(id);
+      if (_like[id] == null) {
+        _like[id] = false;
+      }
+    }
+    print(_like);
+  }
+
+  void show(id) async {
+    Dio.Response response = await dio().get('/salon/$id');
+    _salon = response.data;
+    // for( dynamic _salon in _salons){
+    //   int id=_salon["id"];
+    //   print(id);
+    //   if(_like[id]==null){
+    //    _like[id]=false;
+    //   }
+    // }
+    // print(response.data);
   }
 
   void addLike(int id) async {
     Dio.Response response = await dio().put('/salon/addlike/$id');
-    _like = true;
+    _like[id] = true;
     // _salons=response.data;
     print(response);
   }
@@ -49,7 +75,7 @@ class Salon extends ChangeNotifier {
   void deleteLike(int id) async {
     Dio.Response response = await dio().put('/salon/deletelike/$id');
     // _salons=response.data;
-    _like = false;
+    _like[id] = false;
     print(response);
   }
 }

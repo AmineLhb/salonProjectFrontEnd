@@ -2,17 +2,20 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/screens/display/salons_screen.dart';
+import 'package:flutter_application_1/screens/display/service_screen.dart';
+import 'package:flutter_application_1/screens/form/barber_form.dart';
+import 'package:flutter_application_1/screens/form/gallery_form.dart';
+import 'package:flutter_application_1/screens/form/salon_form.dart';
+import 'package:flutter_application_1/screens/form/service_form.dart';
+import 'package:flutter_application_1/screens/login_screen.dart';
+import 'package:flutter_application_1/services/auth.dart';
+import 'package:flutter_application_1/services/salon.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_application_1/services/service.dart';
 
-import '../services/auth.dart';
-import '../services/salon.dart';
-import 'display/salons_screen.dart';
-import 'form/barber_form.dart';
-import 'form/gallery_form.dart';
-import 'form/salon_form.dart';
-import 'form/service_form.dart';
-import 'login_screen.dart';
+var salons = Salon.salons;
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -36,417 +39,458 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Home Page'),
-      ),
-      body: Container(
-        child: SingleChildScrollView(
-          child: SafeArea(
-            child: Column(
-              children: <Widget>[
-                SizedBox(
-                  height: 200,
-                ),
-                Container(
-                  width: MediaQuery.of(context).size.width,
-                  decoration: BoxDecoration(
-                    color: Color.fromARGB(250, 249, 249, 249),
-                    // color: Color(0xffFFF0EB),
-                    borderRadius: BorderRadius.vertical(
-                      top: Radius.circular(50),
+    return Stack(
+      children: [
+        Center(
+          child: Column(
+            children: <Widget>[
+              Image.asset(
+                'images/logo.png',
+                width: 200,
+                height: 380,
+              ),
+            ],
+          ),
+        ),
+        Scaffold(
+          backgroundColor: Color.fromARGB(186, 114, 212, 170).withOpacity(0.4),
+          appBar: AppBar(
+            backgroundColor: Colors.transparent,
+            title: Padding(
+              padding: const EdgeInsets.all(70.0),
+              child: Text('The Barber'),
+            ),
+          ),
+          body: Container(
+            child: SingleChildScrollView(
+              child: SafeArea(
+                child: Column(
+                  children: <Widget>[
+                    SizedBox(
+                      height: 200,
                     ),
-                  ),
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(vertical: 10),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        SizedBox(
-                          width: 700,
+                    Container(
+                      width: MediaQuery.of(context).size.width,
+                      decoration: BoxDecoration(
+                        color: Color.fromARGB(250, 249, 249, 249),
+                        // color: Color(0xffFFF0EB),
+                        borderRadius: BorderRadius.vertical(
+                          top: Radius.circular(50),
                         ),
-                        Center(
-                          child: Text(
-                            'Find Salon Nearby',
-                            style: TextStyle(
-                              fontSize: 46,
-                              fontFamily: 'Cursive',
-                              color: Color.fromARGB(255, 161, 18, 18),
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          height: 30,
-                        ),
-                        Column(
-                          children: [
+                      ),
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(vertical: 10),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: <Widget>[
                             SizedBox(
-                              width: 30,
+                              width: 700,
+                            ),
+                            Center(
+                              child: Text(
+                                'Find Salon Nearby',
+                                style: TextStyle(
+                                  fontSize: 46,
+                                  fontFamily: 'Cursive',
+                                  color: Color.fromARGB(255, 161, 18, 18),
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              height: 30,
+                            ),
+                            Column(
+                              children: [
+                                SizedBox(
+                                  width: 30,
+                                ),
+                                RichText(
+                                    softWrap: true,
+                                    textAlign: TextAlign.center,
+                                    text: TextSpan(
+                                        style: TextStyle(
+                                            color: Colors.grey[600],
+                                            fontSize: 18),
+                                        children: [
+                                          TextSpan(
+                                              text:
+                                                  "Find the best barbershop in your area.\n"),
+                                          TextSpan(
+                                              text:
+                                                  "The barber provides you the most popular barbers near you.")
+                                        ])),
+                                Container(
+                                  child: Image.asset(
+                                    'images/second.jpg',
+                                    fit: BoxFit.fill,
+                                    width: 260,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            SizedBox(
+                              height: 40,
                             ),
                             RichText(
                                 softWrap: true,
                                 textAlign: TextAlign.center,
                                 text: TextSpan(
                                     style: TextStyle(
-                                        color: Colors.grey[600], fontSize: 18),
+                                      color: Color.fromARGB(255, 143, 89, 89),
+                                      fontSize: 30,
+                                      fontWeight: FontWeight.bold,
+                                      fontFamily: 'Cursive',
+                                    ),
                                     children: [
                                       TextSpan(
                                           text:
-                                              "Find the best barbershop in your area.\n"),
-                                      TextSpan(
-                                          text:
-                                              "The barber provides you the most popular barbers near you.")
+                                              "It was never easier and faster to stay connected with your customers. Now you can do it directly from this barber app."),
                                     ])),
-                            Container(
-                              child: Image.asset(
-                                'images/second.jpg',
-                                fit: BoxFit.fill,
-                                width: 260,
-                              ),
+                            SizedBox(
+                              height: 50,
                             ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: 40,
-                        ),
-                        RichText(
-                            softWrap: true,
-                            textAlign: TextAlign.center,
-                            text: TextSpan(
-                                style: TextStyle(
-                                  color: Color.fromARGB(255, 143, 89, 89),
-                                  fontSize: 30,
-                                  fontWeight: FontWeight.bold,
-                                  fontFamily: 'Cursive',
-                                ),
+                            SingleChildScrollView(
+                              scrollDirection: Axis.horizontal,
+                              child: Row(
                                 children: [
-                                  TextSpan(
-                                      text:
-                                          "It was never easier and faster to stay connected with your customers. Now you can do it directly from this barber app."),
-                                ])),
-                        SizedBox(
-                          height: 50,
-                        ),
-                        SingleChildScrollView(
-                          scrollDirection: Axis.horizontal,
-                          child: Row(
-                            children: [
-                              Container(
-                                width: 150,
-                                height: 200,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(35),
-                                  image: DecorationImage(
-                                    image: AssetImage(
-                                      'images/img3.jpg',
+                                  Container(
+                                    width: 150,
+                                    height: 200,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(35),
+                                      image: DecorationImage(
+                                        image: AssetImage(
+                                          'images/img3.jpg',
+                                        ),
+                                        fit: BoxFit.fill,
+                                      ),
                                     ),
-                                    fit: BoxFit.fill,
                                   ),
+                                  SizedBox(
+                                    width: 20,
+                                  ),
+                                  Container(
+                                    width: 150,
+                                    height: 200,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(35),
+                                      image: DecorationImage(
+                                        image: AssetImage(
+                                          'images/img2.jpg',
+                                        ),
+                                        fit: BoxFit.fill,
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: 20,
+                                  ),
+                                  Container(
+                                    width: 150,
+                                    height: 200,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(35),
+                                      image: DecorationImage(
+                                        image: AssetImage(
+                                          'images/img1.jpg',
+                                        ),
+                                        fit: BoxFit.fill,
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: 20,
+                                  ),
+                                  Container(
+                                    width: 150,
+                                    height: 200,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(35),
+                                      image: DecorationImage(
+                                        image: AssetImage(
+                                          'images/img4.jpg',
+                                        ),
+                                        fit: BoxFit.fill,
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: 20,
+                                  ),
+                                  Container(
+                                    width: 150,
+                                    height: 200,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(35),
+                                      image: DecorationImage(
+                                        image: AssetImage(
+                                          'images/first.jpg',
+                                        ),
+                                        fit: BoxFit.fill,
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: 20,
+                                  ),
+                                  Container(
+                                    width: 150,
+                                    height: 200,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(35),
+                                      image: DecorationImage(
+                                        image: AssetImage(
+                                          'images/5.jpg',
+                                        ),
+                                        fit: BoxFit.fill,
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: 20,
+                                  ),
+                                  Container(
+                                    width: 150,
+                                    height: 200,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(35),
+                                      image: DecorationImage(
+                                        image: AssetImage(
+                                          'images/3.jpg',
+                                        ),
+                                        fit: BoxFit.fill,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Container(
+                              height: MediaQuery.of(context).size.height,
+                              width: MediaQuery.of(context).size.width,
+                              child: Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 30),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: <Widget>[
+                                    SizedBox(
+                                      height: 50,
+                                    ),
+                                    Center(
+                                      child: Text(
+                                        'Top 3 Salons',
+                                        style: TextStyle(
+                                          fontFamily: 'Cursive',
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 45,
+                                          color:
+                                              Color.fromARGB(255, 120, 89, 146),
+                                        ),
+                                      ),
+                                    ),
+                                    // StylistCard(stylistData[0]),
+                                    // StylistCard(stylistData[1]),
+                                    // StylistCard(stylistData[2]),
+                                  ],
                                 ),
                               ),
-                              SizedBox(
-                                width: 20,
-                              ),
-                              Container(
-                                width: 150,
-                                height: 200,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(35),
-                                  image: DecorationImage(
-                                    image: AssetImage(
-                                      'images/img2.jpg',
-                                    ),
-                                    fit: BoxFit.fill,
-                                  ),
-                                ),
-                              ),
-                              SizedBox(
-                                width: 20,
-                              ),
-                              Container(
-                                width: 150,
-                                height: 200,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(35),
-                                  image: DecorationImage(
-                                    image: AssetImage(
-                                      'images/img1.jpg',
-                                    ),
-                                    fit: BoxFit.fill,
-                                  ),
-                                ),
-                              ),
-                              SizedBox(
-                                width: 20,
-                              ),
-                              Container(
-                                width: 150,
-                                height: 200,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(35),
-                                  image: DecorationImage(
-                                    image: AssetImage(
-                                      'images/img4.jpg',
-                                    ),
-                                    fit: BoxFit.fill,
-                                  ),
-                                ),
-                              ),
-                              SizedBox(
-                                width: 20,
-                              ),
-                              Container(
-                                width: 150,
-                                height: 200,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(35),
-                                  image: DecorationImage(
-                                    image: AssetImage(
-                                      'images/first.jpg',
-                                    ),
-                                    fit: BoxFit.fill,
-                                  ),
-                                ),
-                              ),
-                              SizedBox(
-                                width: 20,
-                              ),
-                              Container(
-                                width: 150,
-                                height: 200,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(35),
-                                  image: DecorationImage(
-                                    image: AssetImage(
-                                      'images/5.jpg',
-                                    ),
-                                    fit: BoxFit.fill,
-                                  ),
-                                ),
-                              ),
-                              SizedBox(
-                                width: 20,
-                              ),
-                              Container(
-                                width: 150,
-                                height: 200,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(35),
-                                  image: DecorationImage(
-                                    image: AssetImage(
-                                      'images/3.jpg',
-                                    ),
-                                    fit: BoxFit.fill,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Container(
-                          height: MediaQuery.of(context).size.height,
-                          width: MediaQuery.of(context).size.width,
-                          child: Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 30),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
                               children: <Widget>[
-                                SizedBox(
-                                  height: 50,
+                                SocialIcon(
+                                  iconSrc: "images/facebook.png",
+                                  press: () {},
                                 ),
-                                Center(
-                                  child: Text(
-                                    'Top 3 Salons',
-                                    style: TextStyle(
-                                      fontFamily: 'Cursive',
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 45,
-                                      color: Color.fromARGB(255, 120, 89, 146),
-                                    ),
-                                  ),
+                                SocialIcon(
+                                  iconSrc: "images/instagram.png",
+                                  press: () {},
                                 ),
-                                // StylistCard(stylistData[0]),
-                                // StylistCard(stylistData[1]),
-                                // StylistCard(stylistData[2]),
+                                SocialIcon(
+                                  iconSrc: "images/twitter.png",
+                                  press: () {},
+                                ),
                               ],
-                            ),
-                          ),
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            SocialIcon(
-                              iconSrc: "images/facebook.png",
-                              press: () {},
-                            ),
-                            SocialIcon(
-                              iconSrc: "images/instagram.png",
-                              press: () {},
-                            ),
-                            SocialIcon(
-                              iconSrc: "images/twitter.png",
-                              press: () {},
-                            ),
+                            )
                           ],
-                        )
-                      ],
+                        ),
+                      ),
                     ),
-                  ),
+                  ],
                 ),
-              ],
+              ),
             ),
           ),
+          drawer: Drawer(child: Consumer<Auth>(builder: (context, auth, child) {
+            if (!auth.authenticated) {
+              return ListView(
+                children: [
+                  ListTile(
+                    title: Text('Login'),
+                    leading: Icon(Icons.login),
+                    onTap: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => LoginScreen()));
+                    },
+                  ),
+                ],
+              );
+            } else {
+              if (Auth.role == 2) {
+                return ListView(
+                  children: [
+                    DrawerHeader(
+                      decoration: BoxDecoration(
+                        color: Color.fromARGB(189, 39, 85, 65),
+                      ),
+                      child: Column(
+                        children: [
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Text(
+                            auth.user.name,
+                            style: TextStyle(color: Colors.white),
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Text(
+                            auth.user.email,
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        ],
+                      ),
+                    ),
+                    ListTile(
+                      title: Text('Salon Profile'),
+                      leading: Icon(Icons.home),
+                      onTap: () async {
+                        int id =
+                            await Provider.of<Auth>(context, listen: false).id;
+                        await Provider.of<Salon>(context, listen: false)
+                            .show(id);
+                        var salon = Salon.salon;
+                        print(salon);
+                        await Provider.of<Service>(context, listen: false)
+                            .show(id);
+                        var services =
+                            await Provider.of<Service>(context, listen: false)
+                                .services;
+
+                        print(id);
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    ServiceScreen(salon, services)));
+                      },
+                    ),
+                    ListTile(
+                      title: Text('Add Image'),
+                      leading: Icon(Icons.add_a_photo_outlined),
+                      onTap: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => GalleryForm()));
+                      },
+                    ),
+                    ListTile(
+                      title: Text('Add service'),
+                      leading: Icon(Icons.list_rounded),
+                      onTap: () async {
+                        await Provider.of<Salon>(context, listen: false)
+                            .index();
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => ServicesForm()));
+                      },
+                    ),
+                    ListTile(
+                      title: Text('Add barber'),
+                      leading: Icon(Icons.add_box_outlined),
+                      onTap: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => BarberForm()));
+                      },
+                    ),
+                    ListTile(
+                      title: Text('Logout'),
+                      leading: Icon(Icons.logout),
+                      onTap: () {
+                        Provider.of<Auth>(context, listen: false).logout();
+                      },
+                    ),
+                  ],
+                );
+              } else {
+                return ListView(
+                  children: [
+                    DrawerHeader(
+                      child: Column(
+                        children: [
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Text(
+                            auth.user.name,
+                            style: TextStyle(color: Colors.white),
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Text(
+                            auth.user.email,
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        ],
+                      ),
+                      decoration: BoxDecoration(
+                        color: Colors.blue,
+                      ),
+                    ),
+                    ListTile(
+                      title: Text('Salons list'),
+                      leading: Icon(Icons.list_rounded),
+                      onTap: () async {
+                        await Provider.of<Salon>(context, listen: false)
+                            .index();
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => SalonsScreen()));
+                      },
+                    ),
+                    ListTile(
+                      title: Text('upgrade to salon'),
+                      leading: Icon(Icons.home),
+                      onTap: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => SalonForm()));
+                      },
+                    ),
+
+                    //  ListTile(
+                    //   title: Text('Contact us'),
+                    //   leading: Icon(Icons.contact_support_outlined),
+                    //   onTap: () {
+
+                    //     // Navigator.of(context).push(
+                    //     //     MaterialPageRoute(builder: (context) => SalonForm()));
+                    //   },
+                    // ),
+                    ListTile(
+                      title: Text('Logout'),
+                      leading: Icon(Icons.logout),
+                      onTap: () {
+                        Provider.of<Auth>(context, listen: false).logout();
+                      },
+                    ),
+                  ],
+                );
+              }
+            }
+          })),
         ),
-      ),
-      drawer: Drawer(child: Consumer<Auth>(builder: (context, auth, child) {
-        if (!auth.authenticated) {
-          return ListView(
-            children: [
-              ListTile(
-                title: Text('Login'),
-                leading: Icon(Icons.login),
-                onTap: () {
-                  Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => LoginScreen()));
-                },
-              ),
-            ],
-          );
-        } else {
-          if (Auth.role == 2) {
-            return ListView(
-              children: [
-                DrawerHeader(
-                  child: Column(
-                    children: [
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Text(
-                        auth.user.name,
-                        style: TextStyle(color: Colors.white),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Text(
-                        auth.user.email,
-                        style: TextStyle(color: Colors.white),
-                      ),
-                    ],
-                  ),
-                  decoration: BoxDecoration(
-                    color: Colors.blue,
-                  ),
-                ),
-                ListTile(
-                  title: Text('Salon Profile'),
-                  leading: Icon(Icons.home),
-                  onTap: () {
-                    // Provider.of<Service>(context,listen: false).show();
-                    // Navigator.of(context).push(
-                    //     MaterialPageRoute(builder: (context) => ServiceScreen()));
-                  },
-                ),
-                ListTile(
-                  title: Text('Add Image'),
-                  leading: Icon(Icons.add_a_photo_outlined),
-                  onTap: () {
-                    Navigator.of(context).push(
-                        MaterialPageRoute(builder: (context) => GalleryForm()));
-                  },
-                ),
-                ListTile(
-                  title: Text('Add service'),
-                  leading: Icon(Icons.list_rounded),
-                  onTap: () async {
-                    await Provider.of<Salon>(context, listen: false).index();
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => ServicesForm()));
-                  },
-                ),
-                ListTile(
-                  title: Text('Add barber'),
-                  leading: Icon(Icons.add_box_outlined),
-                  onTap: () {
-                    Navigator.of(context).push(
-                        MaterialPageRoute(builder: (context) => BarberForm()));
-                  },
-                ),
-                ListTile(
-                  title: Text('Logout'),
-                  leading: Icon(Icons.logout),
-                  onTap: () {
-                    Provider.of<Auth>(context, listen: false).logout();
-                  },
-                ),
-              ],
-            );
-          } else {
-            return ListView(
-              children: [
-                DrawerHeader(
-                  child: Column(
-                    children: [
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Text(
-                        auth.user.name,
-                        style: TextStyle(color: Colors.white),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Text(
-                        auth.user.email,
-                        style: TextStyle(color: Colors.white),
-                      ),
-                    ],
-                  ),
-                  decoration: BoxDecoration(
-                    color: Colors.blue,
-                  ),
-                ),
-                ListTile(
-                  title: Text('change to salon'),
-                  leading: Icon(Icons.home),
-                  onTap: () {
-                    Navigator.of(context).push(
-                        MaterialPageRoute(builder: (context) => SalonForm()));
-                  },
-                ),
-                ListTile(
-                  title: Text('Salons list'),
-                  leading: Icon(Icons.list_rounded),
-                  onTap: () async {
-                    await Provider.of<Salon>(context, listen: false).index();
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => SalonsScreen()));
-                  },
-                ),
-                ListTile(
-                  title: Text('Contact us'),
-                  leading: Icon(Icons.contact_support_outlined),
-                  onTap: () {
-                    // Navigator.of(context).push(
-                    //     MaterialPageRoute(builder: (context) => SalonForm()));
-                  },
-                ),
-                ListTile(
-                  title: Text('Logout'),
-                  leading: Icon(Icons.logout),
-                  onTap: () {
-                    Provider.of<Auth>(context, listen: false).logout();
-                  },
-                ),
-              ],
-            );
-          }
-        }
-      })),
+      ],
     );
   }
 }

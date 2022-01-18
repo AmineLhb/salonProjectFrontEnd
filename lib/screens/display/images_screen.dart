@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/screens/display/service_screen.dart';
-import 'package:flutter_application_1/services/barber.dart';
+import 'package:flutter_application_1/screens/home_screen.dart';
+import 'package:flutter_application_1/screens/views/navBottom.dart';
 import 'package:flutter_application_1/services/gallery.dart';
-import 'package:flutter_application_1/services/service.dart';
 
 import 'package:provider/provider.dart';
 
@@ -32,7 +31,8 @@ class GalleryScreen extends StatelessWidget {
                   color: Colors.white,
                 ),
                 onPressed: () {
-                  Navigator.pop(context);
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => HomeScreen()));
                 },
               ),
             ),
@@ -108,70 +108,7 @@ class GalleryScreen extends StatelessWidget {
           ],
         ),
       ),
-      bottomNavigationBar: NavigationBarTheme(
-        data: NavigationBarThemeData(
-          indicatorColor: Colors.orange[50],
-          height: 60,
-          labelTextStyle: MaterialStateProperty.all(
-            TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
-          ),
-        ),
-        child: NavigationBar(
-          backgroundColor: Colors.orange[50],
-          destinations: [
-            InkWell(
-                child: Icon(
-                  Icons.list_rounded,
-                  color: Colors.grey,
-                ),
-                onTap: () async {
-                  await Provider.of<Service>(context, listen: false)
-                      .show(stylist['user_id']);
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => ServiceScreen(stylist)));
-                }),
-            InkWell(
-                child: Icon(
-                  Icons.photo_size_select_actual,
-                  color: Colors.grey,
-                ),
-                onTap: () async {
-                  await Provider.of<Gallery>(context, listen: false)
-                      .show(stylist["user_id"]);
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => GalleryScreen(stylist)));
-                }),
-            InkWell(
-                child: Icon(
-                  Icons.person,
-                  color: Colors.grey,
-                ),
-                onTap: () async {
-                  await Provider.of<Barber>(context, listen: false)
-                      .show(stylist['user_id']);
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => BarberScreen(stylist)));
-                }),
-            InkWell(
-                child: Icon(
-                  Icons.chat,
-                  color: Colors.grey,
-                ),
-                onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => GalleryScreen(stylist)));
-                }),
-          ],
-        ),
-      ),
+      bottomNavigationBar: NavBottom(stylist),
     );
   }
 }

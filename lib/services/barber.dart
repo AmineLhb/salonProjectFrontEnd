@@ -1,37 +1,39 @@
 import 'package:dio/dio.dart' as Dio;
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_application_1/services/auth.dart';
+import 'package:flutter_application_1/services/dio.dart';
+
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
-import 'auth.dart';
-import 'dio.dart';
-import 'salon.dart';
-
-class Barber extends ChangeNotifier {
+class Barber extends ChangeNotifier{
   String _token;
-  static List<dynamic> _barber;
-  static List<dynamic> get barber => _barber;
+  List<dynamic> _barbers;
+  List<dynamic> get barbers=>_barbers;
 
   final storage = new FlutterSecureStorage();
 
-  //store barber
-  void store({Map creds}) async {
-    print(creds);
+      //store barber 
+    void store({Map creds}) async {
+      print(creds);
 
-    try {
-      _token = Auth.token;
-      print(_token);
-      Dio.Response response = await dio().post('/barber',
-          data: creds,
-          options: Dio.Options(headers: {'Authorization': 'Bearer $_token'}));
-    } catch (e) {
-      print(e.toString());
+      try{
+        _token=Auth.token;
+        print(_token);
+        Dio.Response response = await dio().post('/barber',data: creds,
+              options: Dio.Options(headers: {'Authorization': 'Bearer $_token'}));
+
+      }catch(e){
+        print(e.toString());
+      }
     }
-  }
-
-  void show(int id) async {
-    // print(id);
-    Dio.Response response = await dio().get('/barber/$id');
-    _barber = response.data;
-    print(response.data);
+    void show(int id) async {
+      // print(id);
+      Dio.Response response = await dio().get('/barber/$id');
+      _barbers=response.data;
+      print(response.data);
+    }
+    void destroy(int id) async {
+    Dio.Response response =await dio().delete('/barber/$id');
+    print(_barbers);
   }
 }

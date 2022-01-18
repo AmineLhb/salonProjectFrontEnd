@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart' as Dio;
-import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_application_1/services/auth.dart';
 import 'package:flutter_application_1/services/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -7,8 +7,8 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 class Service extends ChangeNotifier {
   String _token;
   final storage = new FlutterSecureStorage();
-  static List<dynamic> _services;
-  static List<dynamic> get services => _services;
+  List<dynamic> _services;
+  List<dynamic> get services => _services;
 
   //store service
   void store({Map creds}) async {
@@ -31,5 +31,10 @@ class Service extends ChangeNotifier {
     // Dio.Response response2=await dio().get('salon/1');
     print(response.data);
     // print(response2.data);
+  }
+
+  void destroy(int id) async {
+    Dio.Response response = await dio().delete('/service/$id');
+    print(_services);
   }
 }

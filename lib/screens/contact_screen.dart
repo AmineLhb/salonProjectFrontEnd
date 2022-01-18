@@ -1,32 +1,26 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/screens/home_screen.dart';
-import 'package:flutter_application_1/screens/views/palatte.dart';
-import 'package:flutter_application_1/screens/views/widgets.dart';
-import 'package:flutter_application_1/services/barber.dart';
-import 'package:provider/provider.dart';
 
+import 'views/widgets.dart';
 
-class BarberForm extends StatefulWidget {
-  const BarberForm({Key key}) : super(key: key);
+class ContactScreen extends StatefulWidget {
+  const ContactScreen({Key key}) : super(key: key);
   @override
-  State<StatefulWidget> createState() => _BarberForm();
+  State<StatefulWidget> createState() => _ContactScreen();
 }
 
-class _BarberForm extends State<BarberForm> {
-  TextEditingController _namecontroller = TextEditingController();
-  TextEditingController _yearsController = TextEditingController();
+class _ContactScreen extends State<ContactScreen> {
+  TextEditingController _emailcontroller = TextEditingController();
+  TextEditingController _messagecontroller = TextEditingController();
   List<String> _errors = [' '];
 
-  @override
   void initState() {
-    _namecontroller.text = '';
-    _yearsController.text = '';
+    _emailcontroller.text = '';
+    _messagecontroller.text = '';
 
     super.initState();
   }
 
   final _formKey = GlobalKey<FormState>();
-
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -36,7 +30,7 @@ class _BarberForm extends State<BarberForm> {
           appBar: AppBar(
             leading: BackButton(),
             title:
-                Text('Barber Form', style: TextStyle(color: Colors.white)),
+                Text('Contact Us', style: TextStyle(color: Colors.white)),
             backgroundColor: Colors.black,
           ),
           backgroundColor: Colors.transparent,
@@ -46,24 +40,24 @@ class _BarberForm extends State<BarberForm> {
               child: Column(
                 children: [
                   SizedBox(
-                    height: 20,
+                    height: 50,
                   ),
                   Container(
-                    height: 80,
+                    height: 100,
                     child: Center(
                         child: Text(
-                      'Barbers Informations',
+                      'Contact Us',
                       style: TextStyle(
-                          fontSize: 30,
+                          fontSize: 45,
                           fontWeight: FontWeight.bold,
                           color: Colors.white),
                     )),
                   ),
                   SizedBox(
-                    height: 20,
+                    height: 35,
                   ),
                   Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 25),
+                    padding: const EdgeInsets.symmetric(horizontal: 35),
                     child: Column(
                       children: [
                         Container(
@@ -72,17 +66,17 @@ class _BarberForm extends State<BarberForm> {
                             borderRadius: BorderRadius.circular(16),
                           ),
                           child: TextFormField(
-                            controller: _namecontroller,
+                            controller: _emailcontroller,
                             //validation
                             validator: (String value) {
                               // String pattern = r'(^[a-zA-Z ]*$)';
                               String pattern = r'(^([\s]*[\S]+).{0,249}$)';
                               RegExp regExp = new RegExp(pattern);
                               if (value.isEmpty) {
-                                _errors.add("Barber name is required");
+                                _errors.add("Email is required");
                                 return ' ';
                               } else if (!regExp.hasMatch(value)) {
-                                _errors.add("Barber name is required");
+                                _errors.add("Email is required");
                                 return ' ';
                               }
                               return null;
@@ -99,23 +93,26 @@ class _BarberForm extends State<BarberForm> {
                               ),
                               contentPadding: EdgeInsets.symmetric(vertical: 5),
                               border: InputBorder.none,
-                              labelText: "Barber name",
+                              hintText: "Email",
+                              hintStyle: TextStyle(
+                                color: Colors.white,
+                              ),
                               prefixIcon: Padding(
                                 padding: EdgeInsets.symmetric(horizontal: 20),
                                 child: Icon(
-                                  Icons.person,
+                                  Icons.email,
                                   color: Colors.white,
                                   size: 20,
                                 ),
                               ),
-                              hintStyle: kBodyText,
+                              // hintStyle: kBodyText,
                             ),
-                            style: kBodyText,
+                            // style: kBodyText,
                             textInputAction: TextInputAction.next,
                           ),
                         ),
                         SizedBox(
-                          height: 20,
+                          height: 40,
                         ),
                         Container(
                           padding: const EdgeInsets.symmetric(horizontal: 0),
@@ -126,15 +123,15 @@ class _BarberForm extends State<BarberForm> {
                                 borderRadius: BorderRadius.circular(16),
                               ),
                               child: TextFormField(
-                                controller: _yearsController,
+                                controller: _messagecontroller,
+                                maxLines: 6,
                                 //validation
                                 validator: (String value) {
                                   // String pattern = r'(^[a-zA-Z ]*$)';
                                   String pattern = r'(^[0-9]{1}$)';
                                   RegExp regExp = new RegExp(pattern);
                                   if (value.isEmpty) {
-                                    _errors.add(
-                                        "Years of experience' number is required");
+                                    _errors.add("Message is required");
                                     return ' ';
                                   }
                                   return null;
@@ -153,20 +150,24 @@ class _BarberForm extends State<BarberForm> {
                                   contentPadding:
                                       EdgeInsets.symmetric(vertical: 5),
                                   border: InputBorder.none,
-                                  labelText: "Years of experience",
+                                  hintText: "Message",
+                                  hintStyle: TextStyle(
+                                    color: Colors.white,
+                                  ),
                                   prefixIcon: Padding(
                                     padding:
                                         EdgeInsets.symmetric(horizontal: 20),
                                     child: Icon(
-                                      Icons.info_outline_rounded,
+                                      Icons.message,
                                       color: Colors.white,
                                       size: 20,
                                     ),
                                   ),
-                                  hintStyle: kBodyText,
+                                  // hintStyle: kBodyText,
                                 ),
-                                style: kBodyText,
-                                keyboardType: TextInputType.number,
+                                // style: kBodyText,
+
+                                keyboardType: TextInputType.multiline,
                                 textInputAction: TextInputAction.next,
                               ),
                             ),
@@ -192,7 +193,7 @@ class _BarberForm extends State<BarberForm> {
                               height: 20.0,
                             ),
                             Container(
-                              child: Row(
+                              child: Column(
                                 children: [
                                   ElevatedButton(
                                     style: ElevatedButton.styleFrom(
@@ -200,18 +201,16 @@ class _BarberForm extends State<BarberForm> {
                                     ),
                                     onPressed: () {
                                       Map creds = {
-                                        'name': _namecontroller.text,
-                                        'years_exp': _yearsController.text,
-                                        };
+                                        'email': _emailcontroller.text,
+                                        'message': _messagecontroller.text,
+                                      };
                                       if (_formKey.currentState.validate()) {
-                                        Provider.of<Barber>(context, listen: false)
-                                           .store(creds: creds);
                                         print(creds);
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    BarberForm()));
+                                        // Navigator.push(
+                                        //     context,
+                                        //     MaterialPageRoute(
+                                        //         builder: (context) =>
+                                        //             ()));
                                       } else {
                                         print(_errors);
                                         print(_errors.join("\n"));
@@ -258,87 +257,15 @@ class _BarberForm extends State<BarberForm> {
                                       padding: const EdgeInsets.symmetric(
                                           vertical: 10.0),
                                       child: Text(
-                                        "Add Barber",
+                                        "Send",
                                         style: TextStyle(
-                                          fontSize: 17,
+                                          fontSize: 25,
                                         ),
                                       ),
                                     ),
                                   ),
                                   SizedBox(
                                     width: 30.0,
-                                  ),
-                                  ElevatedButton(
-                                    style: ElevatedButton.styleFrom(
-                                      primary: Color.fromARGB(255, 82, 87, 40),
-                                    ),
-                                    onPressed: () {
-                                      Map creds = {
-                                        'name': _namecontroller.text,
-                                        'years_exp': _yearsController.text,
-                                      };
-                                      if (_formKey.currentState.validate()) {
-                                        Provider.of<Barber>(context, listen: false)
-                                           .store(creds: creds);
-                                           Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    HomeScreen()));
-                                        
-                                        print(creds);
-                                      } else {
-                                        print(_errors);
-                                        print(_errors.join("\n"));
-                                        String err = _errors.join("\n");
-                                        showDialog(
-                                            context: context,
-                                            builder: (BuildContext context) {
-                                              return AlertDialog(
-                                                  backgroundColor: Colors.white
-                                                      .withOpacity(0.7),
-                                                  title: Text(
-                                                    'Error',
-                                                    style: TextStyle(
-                                                        color: Colors.red),
-                                                    textAlign: TextAlign.center,
-                                                  ),
-                                                  content: Text(
-                                                    err,
-                                                    style: TextStyle(
-                                                      color: Colors.red,
-                                                    ),
-                                                  ),
-                                                  actions: <Widget>[
-                                                    RaisedButton(
-                                                        color: Colors.white
-                                                            .withOpacity(0.4),
-                                                        child: Text(
-                                                          'OK',
-                                                        ),
-                                                        onPressed: () {
-                                                          Navigator.of(context)
-                                                              .pop();
-                                                        })
-                                                  ]);
-                                            });
-                                      }
-
-                                      setState(() {
-                                        print(_errors);
-                                        _errors.clear();
-                                      });
-                                    },
-                                    child: Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          vertical: 10.0),
-                                      child: Text(
-                                        "Save and go Home",
-                                        style: TextStyle(
-                                          fontSize: 17,
-                                        ),
-                                      ),
-                                    ),
                                   ),
                                 ],
                               ),

@@ -1,13 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/screens/form/barber_form.dart';
+import 'package:flutter_application_1/screens/home_screen.dart';
 import 'package:flutter_application_1/screens/views/palatte.dart';
 import 'package:flutter_application_1/screens/views/widgets.dart';
 import 'package:flutter_application_1/services/service.dart';
-
 import 'package:provider/provider.dart';
-
-
 
 class ServicesForm extends StatefulWidget {
   const ServicesForm({Key key}) : super(key: key);
@@ -346,7 +343,7 @@ class _ServicesForm extends State<ServicesForm> {
                                             context,
                                             MaterialPageRoute(
                                                 builder: (context) =>
-                                                    BarberForm()));
+                                                    HomeScreen()));
                                       } else {
                                         print(_errors);
                                         print(_errors.join("\n"));
@@ -393,7 +390,7 @@ class _ServicesForm extends State<ServicesForm> {
                                       padding: const EdgeInsets.symmetric(
                                           vertical: 10.0),
                                       child: Text(
-                                        "barber informations",
+                                        "Save and go Home",
                                         style: TextStyle(
                                           fontSize: 17,
                                         ),

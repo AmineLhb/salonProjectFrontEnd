@@ -1,19 +1,14 @@
-import 'dart:developer';
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/screens/display/barber_screen.dart';
-import 'package:flutter_application_1/screens/display/images_screen.dart';
-import 'package:flutter_application_1/services/barber.dart';
-import 'package:flutter_application_1/services/gallery.dart';
+import 'package:flutter_application_1/screens/display/salons_screen.dart';
+import 'package:flutter_application_1/screens/home_screen.dart';
+import 'package:flutter_application_1/screens/views/navBottom.dart';
+import 'package:flutter_application_1/services/auth.dart';
 import 'package:flutter_application_1/services/salon.dart';
-import 'package:like_button/like_button.dart';
 import 'package:flutter_application_1/services/service.dart';
-// import 'package:flutter_laravel/screens/views/navbar.dart';
 
+import 'package:like_button/like_button.dart';
 import 'package:provider/provider.dart';
-
-
-
 //import 'package:outline_material_icons/outline_material_icons.dart';
 
 // var serviceList = [
@@ -23,59 +18,21 @@ import 'package:provider/provider.dart';
 //   {'title': 'Oil Treatment', 'duration': 30, 'price': 20},
 // ];
 bool like = true;
-var serviceList = Service.services;
 
+// var serviceList=Service.services;
 class ServiceScreen extends StatelessWidget {
   final stylist;
-  // var i=0;
-
-// Widget isLike(context){
-//   if(true){
-
-//     return MaterialButton(
-//       onPressed: ()async {
-//         await Provider.of<Salon>(context,listen: false).addLike(stylist["id"]);
-
-//           like=true;
-//           print(stylist["likes"]);
-//       },
-//        padding: EdgeInsets.all(10),
-//       shape: CircleBorder(),
-//       color: Colors.white,
-//       child: Icon(Icons.thumb_up_alt_outlined),
-//     );
-//   }else{
-//     return MaterialButton(
-//       onPressed: () {
-//           like=false;
-//           print(stylist["likes"]);
-//       },
-//       padding: EdgeInsets.all(10),
-//       shape: CircleBorder(),
-//       color: Colors.white,
-//       child: Icon(Icons.thumb_up),
-//     );
-//   }
-// }
+  final services;
   void onLikeButtonTapped(bool isLiked) async {
     /// send your request here
     if (isLiked) {
       print("not ok");
     } else {
-      // Dio.Response response = await dio().put('/salon/addlike/$stylist["id"]');
-      // stylist=response.data;
-      // await Provider.of<Salon>(context,listen: false).addLike(stylist["id"]);
       print("ok");
     }
-    // final bool success= await sendRequest();
-
-    /// if failed, you can do nothing
-    // return success? !isLiked:isLiked;
-
-    // return !isLiked;
   }
 
-  ServiceScreen(this.stylist);
+  ServiceScreen(this.stylist, this.services);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -95,7 +52,6 @@ class ServiceScreen extends StatelessWidget {
                       'images/detail_bg.png',
                       fit: BoxFit.fill,
                     ),
-                    // Image.network("http://10.0.2.2:8000/storage/images/EfLSG6WmklHc063a1VGgvBbTVM4yye92YV0bJpIm.jpg"),
                   ],
                 ),
               ),
@@ -108,7 +64,10 @@ class ServiceScreen extends StatelessWidget {
                     color: Colors.white,
                   ),
                   onPressed: () {
-                    Navigator.pop(context);
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => SalonsScreen()));
                   },
                 ),
               ),
@@ -144,8 +103,8 @@ class ServiceScreen extends StatelessWidget {
                               horizontal: 10, vertical: 30),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
-                            children: List.generate(serviceList.length,
-                                (i) => ServiceTile(serviceList[i])),
+                            children: List.generate(services.length,
+                                (i) => ServiceTile(stylist, services[i])),
                           ),
                         ),
                       ],
@@ -186,164 +145,85 @@ class ServiceScreen extends StatelessWidget {
                               fontWeight: FontWeight.bold,
                             ),
                           ),
-                          // SizedBox(
-                          //   height: 10,
-                          // ),
-                          // Row(
-                          //   children: <Widget>[
-                          //     Icon(
-                          //       Icons.star,
-                          //       size: 16,
-                          //       color: Color(0xffFF8573),
-                          //     ),
-                          //     SizedBox(height: 5),
-                          //     Text(
-                          //       stylist['rating'],
-                          //       style: TextStyle(
-                          //         color: Color(0xffFF8573),
-                          //       ),
-                          //     ),
-                          //   ],
-                          // ),
                         ],
                       ),
                     ],
                   ),
                 ),
               ),
-              // Positioned(
-              //   right: 10,
-              //   top: MediaQuery.of(context).size.height / 3 - 55,
-              //   child: IconButton(
-
-              //     padding: EdgeInsets.all(10),
-              //     color: Colors.white,
-              //     icon:
-              //     Icon(Icons.thumb_up),
-              //     onPressed: () {
-              //       print("ok");
-              //     },
-              //   ),
-              // ),
               Positioned(
-                right: 10,
-                top: MediaQuery.of(context).size.height / 3 - 55,
-                child: LikeButton(
-                  size: 40,
-                  circleColor: CircleColor(
-                      start: Color(0xff00ddff), end: Color(0xff0099cc)),
-                  bubblesColor: BubblesColor(
-                    dotPrimaryColor: Color(0xff33b5e5),
-                    dotSecondaryColor: Color(0xff0099cc),
+                  right: 10,
+                  top: MediaQuery.of(context).size.height / 3 - 55,
+                  child: (Auth.role == 1)
+                      ? LikeButton(
+                          size: 40,
+                          circleColor: CircleColor(
+                              start: Color(0xff00ddff), end: Color(0xff0099cc)),
+                          bubblesColor: BubblesColor(
+                            dotPrimaryColor: Color(0xff33b5e5),
+                            dotSecondaryColor: Color(0xff0099cc),
+                          ),
+                          likeBuilder: (bool isLiked) {
+                            return Icon(
+                              Icons.thumb_up,
+                              color: Salon.like[stylist["id"]]
+                                  ? Colors.deepPurpleAccent
+                                  : Colors.grey,
+                              size: 40,
+                            );
+                          },
+                          likeCount: stylist["likes"],
+                          countBuilder: (int count, bool isLiked, String text) {
+                            var color = Salon.like[stylist["id"]]
+                                ? Colors.deepPurpleAccent
+                                : Colors.grey;
+                            Widget result;
+                            if (count == 0) {
+                              result = Text(
+                                "love",
+                                style: TextStyle(color: color),
+                              );
+                            } else
+                              result = Text(
+                                text,
+                                style: TextStyle(color: color),
+                              );
+                            return result;
+                          },
+                          onTap: (isLiked) async {
+                            if (Salon.like[stylist["id"]]) {
+                              await Provider.of<Salon>(context, listen: false)
+                                  .deleteLike(stylist["id"]);
+                              stylist["likes"] = stylist["likes"] - 1;
+                              print("ok");
+                            } else {
+                              await Provider.of<Salon>(context, listen: false)
+                                  .addLike(stylist["id"]);
+                              stylist["likes"] = stylist["likes"] + 1;
+                            }
+                            return !isLiked;
+                          },
+                        )
+                      : Container(width: 0.0, height: 0.0)
+
+                  // isLike(context)
                   ),
-                  likeBuilder: (bool isLiked) {
-                    return Icon(
-                      Icons.thumb_up,
-                      color: isLiked ? Colors.deepPurpleAccent : Colors.grey,
-                      size: 40,
-                    );
-                  },
-                  likeCount: stylist["likes"],
-                  countBuilder: (int count, bool isLiked, String text) {
-                    var color = isLiked ? Colors.deepPurpleAccent : Colors.grey;
-                    Widget result;
-                    if (count == 0) {
-                      result = Text(
-                        "love",
-                        style: TextStyle(color: color),
-                      );
-                    } else
-                      result = Text(
-                        text,
-                        style: TextStyle(color: color),
-                      );
-                    return result;
-                  },
-                  onTap: (isLiked) async {
-                    if (isLiked) {
-                      await Provider.of<Salon>(context, listen: false)
-                          .deleteLike(stylist["id"]);
-                      print("ok");
-                    } else {
-                      await Provider.of<Salon>(context, listen: false)
-                          .addLike(stylist["id"]);
-                    }
-                    return !isLiked;
-                  },
-                ),
-                // isLike(context)
-              ),
             ],
           ),
         ),
       ),
-      bottomNavigationBar: NavigationBarTheme(
-        data: NavigationBarThemeData(
-          indicatorColor: Colors.orange[50],
-          height: 60,
-          labelTextStyle: MaterialStateProperty.all(
-            TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
-          ),
-        ),
-        child: NavigationBar(
-          backgroundColor: Colors.orange[50],
-          destinations: [
-            InkWell(
-                child: Icon(
-                  Icons.list_rounded,
-                  color: Colors.grey,
-                ),
-                onTap: () {
-                  // Navigator.push(context,
-                  //     MaterialPageRoute(builder: (context) => SignUp()));
-                }),
-            InkWell(
-                child: Icon(
-                  Icons.photo_size_select_actual,
-                  color: Colors.grey,
-                ),
-                onTap: () async {
-                  await Provider.of<Gallery>(context, listen: false)
-                      .show(stylist["user_id"]);
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => GalleryScreen(stylist)));
-                }),
-            InkWell(
-                child: Icon(
-                  Icons.person,
-                  color: Colors.grey,
-                ),
-                onTap: () async {
-                  await Provider.of<Barber>(context, listen: false)
-                      .show(stylist['user_id']);
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => BarberScreen(stylist)));
-                }),
-            InkWell(
-                child: Icon(
-                  Icons.chat,
-                  color: Colors.grey,
-                ),
-                onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => GalleryScreen(stylist)));
-                }),
-          ],
-        ),
-      ),
+      bottomNavigationBar: NavBottom(stylist),
     );
   }
 }
 
 class ServiceTile extends StatelessWidget {
   final service;
-  ServiceTile(this.service);
+  final stylist;
+  ServiceTile(
+    this.stylist,
+    this.service,
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -377,6 +257,27 @@ class ServiceTile extends StatelessWidget {
               fontSize: 18,
             ),
           ),
+          (Auth.role == 2)
+              ? IconButton(
+                  icon: Icon(Icons.delete),
+                  onPressed: () async {
+                    print(service["id"]);
+                    await Provider.of<Service>(context, listen: false)
+                        .destroy(service["id"]);
+                    await Provider.of<Service>(context, listen: false)
+                        .show(service["user_id"]);
+                    var services =
+                        await Provider.of<Service>(context, listen: false)
+                            .services;
+
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                ServiceScreen(stylist, services)));
+                    print("ok");
+                  })
+              : Container(width: 0.0, height: 0.0)
         ],
       ),
     );

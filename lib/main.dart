@@ -1,13 +1,14 @@
-// ignore_for_file: prefer_const_constructors
+// import 'dart:js';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_application_1/screens/home_screen.dart';
-import 'package:flutter_application_1/screens/map_screen.dart';
 import 'package:flutter_application_1/services/auth.dart';
+import 'package:flutter_application_1/services/barber.dart';
+import 'package:flutter_application_1/services/gallery.dart';
+import 'package:flutter_application_1/services/reserver.dart';
+import 'package:flutter_application_1/services/salon.dart';
+import 'package:flutter_application_1/services/service.dart';
 import 'package:provider/provider.dart';
-
-import 'services/salon.dart';
 
 void main() {
   runApp(
@@ -15,6 +16,10 @@ void main() {
       providers: [
         ChangeNotifierProvider(create: (context) => Auth()),
         ChangeNotifierProvider(create: (context) => Salon()),
+        ChangeNotifierProvider(create: (context) => Gallery()),
+        ChangeNotifierProvider(create: (context) => Barber()),
+        ChangeNotifierProvider(create: (context) => Service()),
+        ChangeNotifierProvider(create: (context) => Reserver()),
       ],
       child: MyApp(),
     ),
@@ -22,9 +27,8 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key key}) : super(key: key);
-
   // This widget is the root of your application.
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
