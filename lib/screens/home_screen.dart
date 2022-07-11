@@ -133,145 +133,151 @@ class _HomeScreenState extends State<HomeScreen> {
                             SizedBox(
                               height: 40,
                             ),
-                            RichText(
-                                softWrap: true,
-                                textAlign: TextAlign.center,
-                                text: TextSpan(
-                                    style: TextStyle(
-                                      color: Color.fromARGB(255, 143, 89, 89),
-                                      fontSize: 30,
-                                      fontWeight: FontWeight.bold,
-                                      fontFamily: 'Cursive',
-                                    ),
-                                    children: [
-                                      TextSpan(
-                                          text:
-                                              "It was never easier and faster to stay connected with your customers. Now you can do it directly from this barber app."),
-                                    ])),
+                            Padding(
+                              padding: const EdgeInsets.all(15.0),
+                              child: RichText(
+                                  softWrap: true,
+                                  textAlign: TextAlign.center,
+                                  text: TextSpan(
+                                      style: TextStyle(
+                                        color: Color.fromARGB(255, 143, 89, 89),
+                                        fontSize: 30,
+                                        fontWeight: FontWeight.bold,
+                                        fontFamily: 'Cursive',
+                                      ),
+                                      children: [
+                                        TextSpan(
+                                            text:
+                                                "It was never easier and faster to stay connected with your customers. Now you can do it directly from this barber app."),
+                                      ])),
+                            ),
                             SizedBox(
                               height: 50,
                             ),
                             SingleChildScrollView(
                               scrollDirection: Axis.horizontal,
-                              child: Row(
-                                children: [
-                                  Container(
-                                    width: 150,
-                                    height: 200,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(35),
-                                      image: DecorationImage(
-                                        image: AssetImage(
-                                          'images/img3.jpg',
+                              child: Padding(
+                                padding: const EdgeInsets.all(20.0),
+                                child: Row(
+                                  children: [
+                                    Container(
+                                      width: 150,
+                                      height: 200,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(35),
+                                        image: DecorationImage(
+                                          image: AssetImage(
+                                            'images/img3.jpg',
+                                          ),
+                                          fit: BoxFit.fill,
                                         ),
-                                        fit: BoxFit.fill,
                                       ),
                                     ),
-                                  ),
-                                  SizedBox(
-                                    width: 20,
-                                  ),
-                                  Container(
-                                    width: 150,
-                                    height: 200,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(35),
-                                      image: DecorationImage(
-                                        image: AssetImage(
-                                          'images/img2.jpg',
+                                    SizedBox(
+                                      width: 20,
+                                    ),
+                                    Container(
+                                      width: 150,
+                                      height: 200,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(35),
+                                        image: DecorationImage(
+                                          image: AssetImage(
+                                            'images/img2.jpg',
+                                          ),
+                                          fit: BoxFit.fill,
                                         ),
-                                        fit: BoxFit.fill,
                                       ),
                                     ),
-                                  ),
-                                  SizedBox(
-                                    width: 20,
-                                  ),
-                                  Container(
-                                    width: 150,
-                                    height: 200,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(35),
-                                      image: DecorationImage(
-                                        image: AssetImage(
-                                          'images/img1.jpg',
+                                    SizedBox(
+                                      width: 20,
+                                    ),
+                                    Container(
+                                      width: 150,
+                                      height: 200,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(35),
+                                        image: DecorationImage(
+                                          image: AssetImage(
+                                            'images/img1.jpg',
+                                          ),
+                                          fit: BoxFit.fill,
                                         ),
-                                        fit: BoxFit.fill,
                                       ),
                                     ),
-                                  ),
-                                  SizedBox(
-                                    width: 20,
-                                  ),
-                                  Container(
-                                    width: 150,
-                                    height: 200,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(35),
-                                      image: DecorationImage(
-                                        image: AssetImage(
-                                          'images/img4.jpg',
+                                    SizedBox(
+                                      width: 20,
+                                    ),
+                                    Container(
+                                      width: 150,
+                                      height: 200,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(35),
+                                        image: DecorationImage(
+                                          image: AssetImage(
+                                            'images/img4.jpg',
+                                          ),
+                                          fit: BoxFit.fill,
                                         ),
-                                        fit: BoxFit.fill,
                                       ),
                                     ),
-                                  ),
-                                  SizedBox(
-                                    width: 20,
-                                  ),
-                                  Container(
-                                    width: 150,
-                                    height: 200,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(35),
-                                      image: DecorationImage(
-                                        image: AssetImage(
-                                          'images/first.jpg',
+                                    SizedBox(
+                                      width: 20,
+                                    ),
+                                    Container(
+                                      width: 150,
+                                      height: 200,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(35),
+                                        image: DecorationImage(
+                                          image: AssetImage(
+                                            'images/first.jpg',
+                                          ),
+                                          fit: BoxFit.fill,
                                         ),
-                                        fit: BoxFit.fill,
                                       ),
                                     ),
-                                  ),
-                                  SizedBox(
-                                    width: 20,
-                                  ),
-                                  Container(
-                                    width: 150,
-                                    height: 200,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(35),
-                                      image: DecorationImage(
-                                        image: AssetImage(
-                                          'images/5.jpg',
+                                    SizedBox(
+                                      width: 20,
+                                    ),
+                                    Container(
+                                      width: 150,
+                                      height: 200,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(35),
+                                        image: DecorationImage(
+                                          image: AssetImage(
+                                            'images/5.jpg',
+                                          ),
+                                          fit: BoxFit.fill,
                                         ),
-                                        fit: BoxFit.fill,
                                       ),
                                     ),
-                                  ),
-                                  SizedBox(
-                                    width: 20,
-                                  ),
-                                  Container(
-                                    width: 150,
-                                    height: 200,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(35),
-                                      image: DecorationImage(
-                                        image: AssetImage(
-                                          'images/3.jpg',
+                                    SizedBox(
+                                      width: 20,
+                                    ),
+                                    Container(
+                                      width: 150,
+                                      height: 200,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(35),
+                                        image: DecorationImage(
+                                          image: AssetImage(
+                                            'images/3.jpg',
+                                          ),
+                                          fit: BoxFit.fill,
                                         ),
-                                        fit: BoxFit.fill,
                                       ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
                             ),
                             Container(
-                              height: MediaQuery.of(context).size.height,
+                              // height: MediaQuery.of(context).size.height,
                               width: MediaQuery.of(context).size.width,
                               child: Padding(
-                                padding: EdgeInsets.symmetric(horizontal: 30),
+                                padding: EdgeInsets.symmetric(horizontal: 20),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: <Widget>[
@@ -280,7 +286,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     ),
                                     Center(
                                       child: Text(
-                                        'Top 3 Salons',
+                                        'Best Salons',
                                         style: TextStyle(
                                           fontFamily: 'Cursive',
                                           fontWeight: FontWeight.bold,
@@ -293,6 +299,42 @@ class _HomeScreenState extends State<HomeScreen> {
                                     // StylistCard(stylistData[0]),
                                     // StylistCard(stylistData[1]),
                                     // StylistCard(stylistData[2]),
+                                    Container(
+                                      // height: MediaQuery.of(context).size.height,
+                                      // width: MediaQuery.of(context).size.width,
+                                      decoration: BoxDecoration(
+                                        // color: Colors.white,
+                                        borderRadius: BorderRadius.vertical(
+                                          top: Radius.circular(50),
+                                        ),
+                                      ),
+                                      child: Padding(
+                                        padding:
+                                            EdgeInsets.symmetric(horizontal: 5),
+                                        child: SingleChildScrollView(
+                                          child: Column(
+                                            children: [
+                                              SizedBox(
+                                                height: 50,
+                                              ),
+                                              Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: List.generate(
+                                                      salons.length,
+                                                      (i) =>
+                                                          SalonsCard(salons[i]))
+
+                                                  // StylistCard(salons[0]),
+                                                  // StylistCard(salons[1]),
+                                                  // StylistCard(salons[2]),
+
+                                                  ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ),
                                   ],
                                 ),
                               ),
