@@ -317,19 +317,19 @@ class _HomeScreenState extends State<HomeScreen> {
                                               SizedBox(
                                                 height: 50,
                                               ),
-                                              Column(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  children: List.generate(
-                                                      salons.length,
-                                                      (i) =>
-                                                          SalonsCard(salons[i]))
+                                              // Column(
+                                              //     crossAxisAlignment:
+                                              //         CrossAxisAlignment.start,
+                                              //     children: List.generate(
+                                              //         salons.length,
+                                              //         (i) =>
+                                              //             SalonsCard(salons[i]))
 
-                                                  // StylistCard(salons[0]),
-                                                  // StylistCard(salons[1]),
-                                                  // StylistCard(salons[2]),
+                                              //     // StylistCard(salons[0]),
+                                              //     // StylistCard(salons[1]),
+                                              //     // StylistCard(salons[2]),
 
-                                                  ),
+                                              //     ),
                                             ],
                                           ),
                                         ),
